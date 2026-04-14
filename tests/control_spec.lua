@@ -7,19 +7,19 @@ describe("control.lua", function()
     before_each(function()
         surface = {}
 
-        settings = {
+        _G.settings = {
             global = {
                 ["necessary-lights-darkness"] = { value = 0.15 },
             },
         }
 
-        game = {
+        _G.game = {
             surfaces = {
                 nauvis = surface,
             },
         }
 
-        defines = {
+        _G.defines = {
             events = {
                 on_runtime_mod_setting_changed = "on_runtime_mod_setting_changed",
             },
@@ -30,7 +30,7 @@ describe("control.lua", function()
 
         registered_event_type = nil
 
-        script = {
+        _G.script = {
             on_init = function(handler)
                 on_init_handler = handler
             end,
@@ -44,10 +44,10 @@ describe("control.lua", function()
     end)
 
     after_each(function()
-        settings = nil
-        game = nil
-        defines = nil
-        script = nil
+        _G.settings = nil
+        _G.game = nil
+        _G.defines = nil
+        _G.script = nil
     end)
 
     describe("on_init", function()
@@ -64,21 +64,21 @@ describe("control.lua", function()
 
     describe("event registration", function()
         it("registers for on_runtime_mod_setting_changed event", function()
-            assert.are.equal(defines.events.on_runtime_mod_setting_changed, registered_event_type)
+            assert.are.equal(_G.defines.events.on_runtime_mod_setting_changed, registered_event_type)
         end)
     end)
 
     describe("on_runtime_mod_setting_changed", function()
         it("updates surface to new darkness value", function()
             on_init_handler()
-            settings.global["necessary-lights-darkness"].value = 0.5
+            _G.settings.global["necessary-lights-darkness"].value = 0.5
             on_event_handler()
             assert.are.same({ 0.5, 0.5, 0.5 }, surface.brightness_visual_weights)
         end)
 
         it("keeps min_brightness at 0 after setting change", function()
             on_init_handler()
-            settings.global["necessary-lights-darkness"].value = 0.5
+            _G.settings.global["necessary-lights-darkness"].value = 0.5
             on_event_handler()
             assert.are.equal(0, surface.min_brightness)
         end)
@@ -86,13 +86,13 @@ describe("control.lua", function()
 
     describe("boundary values", function()
         it("darkness=0 results in {0, 0, 0} weights", function()
-            settings.global["necessary-lights-darkness"].value = 0
+            _G.settings.global["necessary-lights-darkness"].value = 0
             on_init_handler()
             assert.are.same({ 0, 0, 0 }, surface.brightness_visual_weights)
         end)
 
         it("darkness=1 results in {1, 1, 1} weights", function()
-            settings.global["necessary-lights-darkness"].value = 1
+            _G.settings.global["necessary-lights-darkness"].value = 1
             on_init_handler()
             assert.are.same({ 1, 1, 1 }, surface.brightness_visual_weights)
         end)

@@ -5,7 +5,7 @@ describe("settings.lua", function()
     before_each(function()
         captured_settings = {}
         captured_count = 0
-        data = {
+        _G.data = {
             extend = function(_, entries)
                 for _, entry in ipairs(entries) do
                     captured_settings[entry.name] = entry
@@ -17,7 +17,7 @@ describe("settings.lua", function()
     end)
 
     after_each(function()
-        data = nil
+        _G.data = nil
     end)
 
     it("registers exactly 4 settings", function()
