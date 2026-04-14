@@ -43,6 +43,13 @@ describe("control.lua", function()
         dofile("src/control.lua")
     end)
 
+    after_each(function()
+        settings = nil
+        game = nil
+        defines = nil
+        script = nil
+    end)
+
     describe("on_init", function()
         it("sets brightness_visual_weights to {darkness, darkness, darkness}", function()
             on_init_handler()
@@ -67,6 +74,13 @@ describe("control.lua", function()
             settings.global["necessary-lights-darkness"].value = 0.5
             on_event_handler()
             assert.are.same({ 0.5, 0.5, 0.5 }, surface.brightness_visual_weights)
+        end)
+
+        it("keeps min_brightness at 0 after setting change", function()
+            on_init_handler()
+            settings.global["necessary-lights-darkness"].value = 0.5
+            on_event_handler()
+            assert.are.equal(0, surface.min_brightness)
         end)
     end)
 

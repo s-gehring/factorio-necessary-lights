@@ -23,6 +23,11 @@ describe("data.lua", function()
         dofile("src/data.lua")
     end)
 
+    after_each(function()
+        settings = nil
+        data = nil
+    end)
+
     describe("character light configuration", function()
         it("sets minimum_darkness from setting value", function()
             assert.are.equal(0.3, character.light[1].minimum_darkness)

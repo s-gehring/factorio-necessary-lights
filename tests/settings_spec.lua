@@ -16,6 +16,10 @@ describe("settings.lua", function()
         dofile("src/settings.lua")
     end)
 
+    after_each(function()
+        data = nil
+    end)
+
     it("registers exactly 4 settings", function()
         assert.are.equal(4, captured_count)
     end)
