@@ -9,7 +9,8 @@ data:extend(
                 order = 1,
                 setting_type = "runtime-global",
                 localised_name = "Darkness",
-                localised_description = "Alters the amount of darkness your experience. 0 being normal and 1 being pitch black."
+                localised_description =
+                    "Alters the amount of darkness your experience. 0 being normal and 1 being pitch black."
             },
             {
                 type = "double-setting",

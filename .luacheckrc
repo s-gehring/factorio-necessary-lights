@@ -1,10 +1,12 @@
 std = "lua52+busted"
 
 files["src/"] = {
-    read_globals = {
+    globals = {
         "data",
-        "settings",
         "game",
+    },
+    read_globals = {
+        "settings",
         "script",
         "defines",
     },
